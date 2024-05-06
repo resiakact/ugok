@@ -30,7 +30,7 @@ module.exports.run = async function({ api, event, args }) {
   try {
     const { data } = await axios.get(`https://openaikey-x20f.onrender.com/api?prompt=${encodeURIComponent(input)}`);
     let response = data.response;
-    response += "\n\n𝘛𝘩𝘦 𝘣𝘰𝘵 𝘸𝘢𝘴 𝘤𝘳𝘦𝘢𝘵𝘦𝘥 𝘣𝘺 𝘤𝘩𝘶𝘳𝘤𝘩𝘪𝘭𝘭:https://www.facebook.com/Churchill.Dev4100";
+    response += "\n\n𝗍𝗁𝗂𝗌 𝖻𝗈𝗍 𝗐𝖺𝗌 𝖼𝗋𝖾𝖺𝗍𝖾𝖽 𝖻𝗒 𝗆𝗒 𝖽𝖾𝗏𝖾𝗅𝗈𝗉𝖾𝗋: 𝖪";
     api.sendMessage(response, event.threadID, event.messageID);
   } catch (error) {
     api.sendMessage('An error occurred while processing your request.', event.threadID, event.messageID);
