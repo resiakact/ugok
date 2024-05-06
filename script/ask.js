@@ -1,29 +1,33 @@
 const axios = require('axios');
-
 module.exports.config = {
-		name: "ask",
-		version: 1.0,
-		credits: "OtinXSandip",
-		description: "AI",
-		hasPrefix: false,
-		usages: "{pn} [prompt]",
-		aliases: [],
-		cooldown: 0,
+  name: 'ask',
+  version: '1.0.0',
+  role: 0,
+  hasPrefix: false,
+  aliases: ['gpt', 'openai'],
+  description: "An AI command powered by GPT-4",
+  usage: "Ai [promot]",
+  credits: 'Developer',
+  cooldown: 3,
 };
-
-module.exports.run = async function ({ api, event, args }) {
-		try {
-				const prompt = args.join(" ");
-				if (!prompt) {
-						await api.sendMessage("Hey I'm your virtual assistant, ask me a question.", event.threadID);
-						return;
-				}
-
-				const response = await axios.get(`https://sandipbaruwal.onrender.com/gpt?prompt=${encodeURIComponent(prompt)}`);
-				const answer = response.data.answer;
-
-				await api.sendMessage(answer, event.threadID);
-		} catch (error) {
-				console.error("Error:", error.message);
-		}
+module.exports.run = async function({
+  api,
+  event,
+  args
+}) {
+  const input = args.join(' ');
+  if (!input) {
+    api.sendMessage(`Please provide a question or statement after 'ai'. For example: 'ai What is the capital of France?'`, event.threadID, event.messageID);
+    return;
+  }
+  api.sendMessage(`🔍 "${input}"`, event.threadID, event.messageID);
+  try {
+    const {
+      data
+    } = await axios.get(`https://soyeon-gpt4.onrender.com/api?prompt=${encodeURIComponent(input)}`);
+    const response = data.response;
+    api.sendMessage(response + '\n\nhttps://bit.ly/create-chatbot-me', event.threadID, event.messageID);
+  } catch (error) {
+    api.sendMessage('An error occurred while processing your request.', event.threadID, event.messageID);
+  }
 };
